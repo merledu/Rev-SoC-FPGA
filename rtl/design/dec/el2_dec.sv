@@ -26,11 +26,10 @@
 // A -> D -> EX1 ... WB
 //
 //********************************************************************************
-
 module el2_dec
 import el2_pkg::*;
 #(
-parameter A=0
+`include "el2_param.vh"
  )
   (
    input logic clk,                          // Clock only while core active.  Through one clock header.  For flops with    second clock header built in.  Connected to ACTIVE_L2CLK.
@@ -305,9 +304,15 @@ parameter A=0
    output logic  dec_tlu_icm_clk_override,           // override ICCM clock domain gating
 
    output logic  dec_tlu_i0_commit_cmt,              // committed i0 instruction
-   input  logic  scan_mode                           // Flop scan mode control
-
-   );
+   input  logic  scan_mode     ,                      // Flop scan mode control
+   output logic [31:0] dec_i0_wdata_r,
+   input  logic fpu_valid,        //valid from fpu
+   input  logic [31:0] fpu_result,
+   input  logic       fp_load_o,
+   input  logic [31:0] dccm_rd_data_lo,
+   input  logic int_reg_write,
+   input  logic [4:0] frd
+);
 
 
    logic  dec_tlu_dec_clk_override;      // to and from dec blocks
@@ -333,7 +338,6 @@ parameter A=0
 
    logic [4:0]  dec_i0_waddr_r;
    logic        dec_i0_wen_r;
-   logic [31:0] dec_i0_wdata_r;
    logic        dec_csr_wen_r;           // csr write enable at wb
    logic [11:0] dec_csr_wraddr_r;        // write address for csryes
    logic [31:0] dec_csr_wrdata_r;        // csr write data at wb
@@ -397,16 +401,16 @@ parameter A=0
    assign dec_dbg_rddata[31:0] = dec_i0_wdata_r[31:0];
 
 
-   el2_dec_ib_ctl #(.A(A)) instbuff (.*);
+   el2_dec_ib_ctl #(.pt(pt)) instbuff (.*);
 
 
-   el2_dec_decode_ctl #(.A(A)) decode (.*);
+   el2_dec_decode_ctl #(.pt(pt)) decode (.*);
 
 
-   el2_dec_tlu_ctl #(.A(A)) tlu (.*);
+   el2_dec_tlu_ctl #(.pt(pt)) tlu (.*);
 
 
-   el2_dec_gpr_ctl #(.A(A)) arf (.*,
+   el2_dec_gpr_ctl #(.pt(pt)) arf (.*,
                     // inputs
                     .raddr0(dec_i0_rs1_d[4:0]),
                     .raddr1(dec_i0_rs2_d[4:0]),
@@ -422,7 +426,7 @@ parameter A=0
 
 // Trigger
 
-   el2_dec_trigger #(.A(A)) dec_trigger (.*);
+   el2_dec_trigger #(.pt(pt)) dec_trigger (.*);
 
 
 

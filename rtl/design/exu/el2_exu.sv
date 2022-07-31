@@ -17,7 +17,7 @@
 module el2_exu
 import el2_pkg::*;
 #(
-parameter A=0
+`include "el2_param.vh"
 )
   (
    input logic          clk,                                           // Top level clock
@@ -105,8 +105,6 @@ parameter A=0
    output logic [31:0]  exu_div_result,                                // Divide result
    output logic         exu_div_wren                                   // Divide write enable to GPR
   );
-
-
 
 
    logic [31:0]                i0_rs1_bypass_data_d;
@@ -230,7 +228,7 @@ parameter A=0
 
 
 
-   el2_exu_alu_ctl #(.A(A)) i_alu  (.*,
+   el2_exu_alu_ctl #(.pt(pt)) i_alu  (.*,
                           .enable            ( x_data_en                   ),   // I
                           .pp_in             ( i0_predict_newp_d           ),   // I
                           .valid_in          ( dec_i0_alu_decode_d         ),   // I
@@ -253,7 +251,7 @@ parameter A=0
 
 
 
-   el2_exu_mul_ctl #(.A(A)) i_mul   (.*,
+   el2_exu_mul_ctl #(.pt(pt)) i_mul   (.*,
                           .mul_p             ( mul_p              & {$bits(el2_mul_pkt_t){mul_p.valid}} ),   // I
                           .rs1_in            ( muldiv_rs1_d[31:0] & {32{mul_p.valid}}                    ),   // I
                           .rs2_in            ( i0_rs2_d[31:0]     & {32{mul_p.valid}}                    ),   // I
@@ -261,7 +259,7 @@ parameter A=0
 
 
 
-   el2_exu_div_ctl #(.A(A)) i_div   (.*,
+   el2_exu_div_ctl #(.pt(pt)) i_div   (.*,
                           .cancel            ( dec_div_cancel              ),   // I
                           .dp                ( div_p                       ),   // I
                           .dividend          ( muldiv_rs1_d[31:0]          ),   // I
@@ -271,7 +269,7 @@ parameter A=0
 
 
 
-   assign exu_i0_result_x[31:0]    =  (mul_valid_x)  ?  mul_result_x[31:0]  :  alu_result_x[31:0];
+   assign exu_i0_result_x[31:0]    =  (mul_valid_x)  ?  mul_result_x[31:0]  : alu_result_x[31:0];
 
 
 

@@ -16,7 +16,7 @@
 module el2_dec_ib_ctl
 import el2_pkg::*;
 #(
-parameter A=0
+`include "el2_param.vh"
  )
   (
    input logic                 dbg_cmd_valid,                      // valid dbg cmd

@@ -381,7 +381,19 @@ parameter A=0
    input logic [pt.PIC_TOTAL_INT:1]           extintsrc_req,
    input logic                   timer_int,
    input logic                   soft_int,
-   input logic                   scan_mode
+   input logic                   scan_modem,
+   //for FPU
+   output logic [31:0]           ifu_i0_instr   ,
+   output logic                  ifu_i0_valid   ,
+   output logic [31:0]           dec_i0_wdata_r ,
+   input  logic [31:0]           fpu_result     ,
+   input  logic                  fpu_valid      ,
+   input  logic                  fp_load_o      ,
+   input logic                   fp_store_en    ,
+   input logic    [31:0]         output_to_store,
+   output logic  [31:0]          gpr_i0_rs1_d   ,
+   input logic                   int_reg_write  ,
+   input logic[4:0]              frd
 );
 
 
@@ -525,7 +537,7 @@ parameter A=0
 
    logic         dec_i0_rs1_en_d;
    logic         dec_i0_rs2_en_d;
-   logic  [31:0] gpr_i0_rs1_d;
+
    logic  [31:0] gpr_i0_rs2_d;
 
    logic [31:0] dec_i0_result_r;
@@ -555,8 +567,8 @@ parameter A=0
    logic         dec_tlu_flush_noredir_r;
    logic         dec_tlu_flush_leak_one_r;
    logic         dec_tlu_flush_err_r;
-   logic         ifu_i0_valid;
-   logic [31:0]  ifu_i0_instr;
+
+
    logic [31:1]  ifu_i0_pc;
 
    logic        exu_flush_final;
