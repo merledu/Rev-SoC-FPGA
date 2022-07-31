@@ -119,7 +119,7 @@ module fpnew_top #(
       .rst_ni,
       .operands_i      ( operands_i[NUM_OPS-1:0] ),
       .is_boxed_i      ( input_boxed             ),
-      .rnd_mode_i,
+      .rnd_mode_i(),
       .op_i,
       .op_mod_i,
       .src_fmt_i,

@@ -40,11 +40,12 @@ module fp_wrapper
     logic [31:0]                       foperand_b       ;
     logic [31:0]                       foperand_c       ;
     logic [2:0][31:0]                  foperand         ;
-    logic [3:0]                        fp_alu_operator  ; 
+    fpnew_pkg::operation_e             fp_alu_operator  ; 
     logic                              op_mod           ;
     fpnew_pkg::fp_format_e             fp_src_fmt       ;
     fpnew_pkg::fp_format_e             fp_dst_fmt       ;
-    logic [2:0]                        fp_rounding_mode ;
+    fpnew_pkg::roundmode_e             fp_rounding_mode ;
+//    logic [2:0]                        fp_rounding_mode ;
     fpnew_pkg::status_t                status_o         ;
     logic                              fp_regwrite_o    ;
     logic                              regread_en       ;

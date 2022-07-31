@@ -1,0 +1,10 @@
+sudo su
+to switch to super user
+ls /dev/ttyUSB1 
+to check usb connection with FPGA
+chmod o+rw /dev/ttyUSB1
+write permission
+stty -F /dev/ttyUSB1 115200
+to set baudrate for file transfer
+bash serial.sh
+to execute the script

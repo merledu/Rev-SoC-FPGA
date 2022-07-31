@@ -109,13 +109,13 @@ module rr_arb_tree #(
   output idx_t                idx_o
 );
 
-  // pragma translate_off
-  `ifndef VERILATOR
-  `ifndef XSIM
-  // Default SVA reset
-  default disable iff (!rst_ni || flush_i);
-  `endif
-  `endif
+//  // pragma translate_off
+//  `ifndef VERILATOR
+//  `ifndef XSIM
+//  // Default SVA reset
+//  default disable iff (!rst_ni || flush_i);
+//  `endif
+//  `endif
   // pragma translate_on
 
   // just pass through in this corner case

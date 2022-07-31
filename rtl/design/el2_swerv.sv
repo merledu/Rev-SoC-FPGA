@@ -381,7 +381,7 @@ parameter A=0
    input logic [pt.PIC_TOTAL_INT:1]           extintsrc_req,
    input logic                   timer_int,
    input logic                   soft_int,
-   input logic                   scan_modem,
+   input logic                   scan_mode,
    //for FPU
    output logic [31:0]           ifu_i0_instr   ,
    output logic                  ifu_i0_valid   ,

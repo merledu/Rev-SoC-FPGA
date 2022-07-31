@@ -42,13 +42,13 @@ module fp_decoder
 
   always_comb begin
     if(core_valid == 1'b1) begin
-      assign instr     = instr_rdata_i;
+      instr     = instr_rdata_i;
       // source registers
-      assign instr_rs1 = instr[19:15];
-      assign instr_rs2 = instr[24:20];
-      assign instr_rs3 = instr[31:27];
+      instr_rs1 = instr[19:15];
+      instr_rs2 = instr[24:20];
+      instr_rs3 = instr[31:27];
       //destination register
-      assign instr_rd   = instr[11:7];
+      instr_rd   = instr[11:7];
     end
   end
   // fp source registers
